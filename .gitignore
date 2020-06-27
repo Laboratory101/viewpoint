@@ -1,0 +1,10 @@
+# List of dependencies
+/node_modules
+/package-lock.json
+
+# List of folders
+
+
+# List of files
+.env
+
