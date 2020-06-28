@@ -1,5 +1,5 @@
-import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose'
-import { isEmail } from '../utility/validators'
+import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
+import { isEmail } from '../utility/validators';
 
 @modelOptions({ schemaOptions: { collection: 'Users' } })
 export class User {
@@ -21,4 +21,4 @@ export class User {
     public emailId?: string;
 }
 
-export const UserModel = getModelForClass(User)
+export const UserModel = getModelForClass(User);

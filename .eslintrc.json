@@ -15,7 +15,18 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-console":"error",
-        "no-unused-vars":"warn"
+        "no-console": "error",
+        "no-eval": "error",
+        "no-implied-eval": "error",
+        "no-unused-vars": "warn",
+        "no-loop-func": "error",
+        "no-new-func": "error",
+        "no-new": "error",
+        "semi": [2,
+            "always",
+            {
+                "omitLastInOneLineBlock": true
+            }
+        ]
     }
 }
