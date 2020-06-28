@@ -10,7 +10,7 @@ script:
   - npm run-script build
 branches:
   only:
-  - master
+  - development
 git:
   quiet: true
   submodules: false
