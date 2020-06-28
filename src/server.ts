@@ -12,7 +12,7 @@ const app: express.Application = express();
 const port = process.env.SERVER_PORT;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json())
 app.use('/', loginController);
 app.use('/test', (_req: any, res: any) => {
   const users: UserCollection = new UserCollection();

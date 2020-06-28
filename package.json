@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "prebuild": "eslint \"**/*.ts\" --quiet --fix",
+    "lint": "eslint \"**/*.ts\" --quiet --fix",
     "build": "npm run clean && tsc -p .",
     "prestart": "npm run build",
     "start": "node dist/server.js",
@@ -33,6 +33,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
     "typescript": "^3.9.5"
   },
   "dependencies": {
@@ -43,5 +44,11 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.20"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run build"
+    }
   }
 }
