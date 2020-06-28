@@ -1,7 +1,11 @@
 {
   "name": "viewpoint-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Gather paricipants views on aparticular topic",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Laboratory101/viewpoint.git"
+  },
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
