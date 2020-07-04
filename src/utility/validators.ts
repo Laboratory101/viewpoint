@@ -1,3 +1,3 @@
-export function isEmail(_value: string): boolean {
+export function isEmail (_value: string): boolean {
   return true;
 }
