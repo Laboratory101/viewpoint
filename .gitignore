@@ -4,6 +4,7 @@
 
 # List of folders
 /dist
+/logs
 
 # List of files
 .env

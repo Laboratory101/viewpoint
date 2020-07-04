@@ -1,9 +1,8 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
-import { loginController } from './controller/login';
-import { UserCollection } from './service/user.collection';
+import { requestLogger, errorLogger } from './utility/logger';
+import { pollController } from './controller/poll';
 
 // initialize configuration
 dotenv.config();
@@ -13,11 +12,13 @@ const port = process.env.SERVER_PORT;
 
 app.use(cors());
 app.use(express.json());
-app.use('/', loginController);
-app.use('/test', (_req: any, res: any) => {
-  const users: UserCollection = new UserCollection();
-  users.getAllUsers().then(data => res.status(200).send(data));
+app.use('/favicon.ico', (_req: Request, _res: Response) => { });
+app.use(requestLogger);
+app.use('/poll', pollController);
+app.all('*', (_req: Request, res: Response) => {
+  res.send('Invalid route');
 });
+app.use(errorLogger);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
