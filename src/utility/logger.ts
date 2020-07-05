@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Response, Request, NextFunction } from 'express';
 import path from 'path';
 
-export function requestLogger(req: Request, _res: Response, next: NextFunction) {
+export function requestLogger (req: Request, _res: Response, next: NextFunction) {
   const logMessage: string = '' + new Date() + '-' + req.method + ' ' + req.url + '\n';
   const filePath: string = path.join(__dirname, '../..', 'logs', 'request-logs', 'request.txt');
   fs.appendFile(filePath, logMessage, err => {
@@ -12,7 +12,7 @@ export function requestLogger(req: Request, _res: Response, next: NextFunction) 
   next();
 }
 
-export function errorLogger(err: any, _req: Request, res: Response, next: NextFunction) {
+export function errorLogger (err: any, _req: Request, res: Response, next: NextFunction) {
   if (err) {
     const errorMessage: string = '' + new Date() + '-' + err.stack || err.message + '\n';
     const filePath: string = path.join(__dirname, '../..', 'logs', 'error-logs', 'error.txt');
