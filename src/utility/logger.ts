@@ -14,7 +14,7 @@ export function requestLogger (req: Request, _res: Response, next: NextFunction)
 
 export function errorLogger (err: any, _req: Request, res: Response, next: NextFunction) {
   if (err) {
-    const errorMessage: string = '' + new Date() + '-' + err.stack || err.message + '\n';
+    const errorMessage: string = '\n' + new Date() + '-' + err.stack || err.message + '\n';
     const filePath: string = path.join(__dirname, '../..', 'logs', 'error-logs', 'error.txt');
     fs.appendFile(filePath, errorMessage, err => {
       if (err) {

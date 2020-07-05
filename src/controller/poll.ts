@@ -12,8 +12,7 @@ pollController.post('/savePoll', (req: Request, res: Response, next: NextFunctio
   }
   poll.savePoll(req.body).then(_response => {
     res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });
-  }).catch(err => {
-    err.message = ERROR_MESSAGE.SAVE_POLL_FAILED.message;
+  }).catch((err: any) => {
     next(err);
   });
 });
