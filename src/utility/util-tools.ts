@@ -1,6 +1,6 @@
 import generator from 'generate-password';
 
-export function generatePasswod () {
+export function generatePin () {
   return generator.generate({
     length: 10,
     numbers: true,

@@ -25,11 +25,14 @@ class Candidate {
 
   @prop({ trim: true, type: mongoose.Schema.Types.String })
   public text?: string;
+
+  @prop({ type: mongoose.Schema.Types.Number, default: 0 })
+  public count?: number
 }
 
 @modelOptions({ schemaOptions: { collection: 'Poll', timestamps: true } })
 export class Poll {
-  @prop({ required: true, unique: true, trim: true, type: mongoose.Schema.Types.String })
+  @prop({ required: true, trim: true, type: mongoose.Schema.Types.String })
   public title!: string;
 
   @prop({ trim: true, type: mongoose.Schema.Types.String })
@@ -45,7 +48,7 @@ export class Poll {
   public privacyType!: PRIVACYTYPE;
 
   @prop({ trim: true, type: mongoose.Schema.Types.String, unique: true, minlength: 10 })
-  public password?: string
+  public pin?: string
 
   @prop({ required: true, enum: DISPLAYTYPE })
   public resultDisplayType!: DISPLAYTYPE;
@@ -53,7 +56,7 @@ export class Poll {
   @prop({ required: true, trim: true, type: mongoose.Schema.Types.String })
   public author!: string;
 
-  @prop({ required: true, type: Candidate, _id: false })
+  @prop({ required: true, type: Candidate })
   public candidates!: Candidate[];
 }
 

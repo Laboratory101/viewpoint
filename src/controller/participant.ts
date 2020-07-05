@@ -8,17 +8,20 @@ import { errorHandler } from '../utility/errorHandler';
 export const participantController = express.Router();
 const poll: PollCollection = new PollCollection();
 
-participantController.get('/poll/:id', (req: Request, res: Response, next: NextFunction) => {
-  const search = { _id: req.params.id };
-  const filterBy = { title: 1, description: 1, candidates: 1, createdAt: 1, duration: 1, _id: 0 };
+participantController.post('/poll', (req: Request, res: Response, next: NextFunction) => {
+  const search = { _id: req.body.id };
+  const filterBy = { _id: 0, participantCount: 0, author: 0, updatedAt: 0 };
   poll.fetchPollByRef(search, filterBy).then((response: any) => {
     const data = response[0];
     const today = new Date().getTime();
-    if (today <= addDays(data.createdAt, data.duration)) {
-      res.status(200).send(data);
-    } else {
+    if (today > addDays(data.createdAt, data.duration)) {
       const err = errorHandler(ERROR_MESSAGE.UNAVAILABLE_RESOURCE);
       next(err);
+    } else if (req.body.pin !== data.pin) {
+      const err = errorHandler(ERROR_MESSAGE.INCORRECT_PIN);
+      next(err);
+    } else {
+      res.status(200).send(data);
     }
   }).catch(err => {
     err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;

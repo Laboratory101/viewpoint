@@ -1,14 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { PollCollection } from '../service/poll.collection';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../utility/message';
-import { generatePasswod } from '../utility/util-tools';
+import { generatePin } from '../utility/util-tools';
 
 export const pollController = express.Router();
 const poll: PollCollection = new PollCollection();
 
 pollController.post('/savePoll', (req: Request, res: Response, next: NextFunction) => {
   if (req.body.privacyType === 1) {
-    req.body.password = generatePasswod();
+    req.body.pin = generatePin();
   }
   poll.savePoll(req.body).then(_response => {
     res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });

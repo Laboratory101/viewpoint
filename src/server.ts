@@ -18,7 +18,7 @@ app.use(connectToDB);
 app.use('/favicon.ico', (_req: Request, _res: Response) => { });
 app.use(requestLogger);
 app.use('/poll', pollController);
-app.use('/participant', participantController);
+app.use('/participate', participantController);
 app.all('*', (_req: Request, res: Response) => {
   res.send('Invalid route');
 });

@@ -5,7 +5,8 @@ export const ERROR_MESSAGE: Response = {
   SAVE_POLL_FAILED: { message: 'Insertion failed. Check with DB Admin' },
   FETCH_POLL_FAILED: { message: 'You have not created any poll yet' },
   IMAGE_UPLOAD_ERROR: { message: 'Image could not be saved' },
-  UNAVAILABLE_RESOURCE: { status: 410, message: 'Requested resource is no longer available' }
+  UNAVAILABLE_RESOURCE: { status: 410, message: 'Requested resource is no longer available' },
+  INCORRECT_PIN: { status: 401, message: 'Incorrect pin' }
 };
 
 export const SUCCESS_MESSAGE: Response = {
