@@ -1,14 +1,28 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { PollCollection } from '../service/poll.collection';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../utility/message';
+import { generatePasswod } from '../utility/util-tools';
 
 export const pollController = express.Router();
 const poll: PollCollection = new PollCollection();
 
 pollController.post('/savePoll', (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.privacyType === 1) {
+    req.body.password = generatePasswod();
+  }
   poll.savePoll(req.body).then(_response => {
-    res.status(200).send({ message: 'Insertion Successfull' });
+    res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });
   }).catch(err => {
-    err.message = 'Insertion failed. Check with DB Admin';
+    err.message = ERROR_MESSAGE.SAVE_POLL_FAILED.message;
+    next(err);
+  });
+});
+
+pollController.get('/fetchPoll/:id', (req: Request, res: Response, next: NextFunction) => {
+  poll.fetchPollByRef({ _id: req.params.id }).then(pollList => {
+    res.status(200).send(pollList);
+  }).catch(err => {
+    err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;
     next(err);
   });
 });
