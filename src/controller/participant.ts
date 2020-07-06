@@ -17,7 +17,7 @@ participantController.post('/poll', (req: Request, res: Response, next: NextFunc
     if (today > addDays(data.createdAt, data.duration)) {
       const err = errorHandler(ERROR_MESSAGE.UNAVAILABLE_RESOURCE);
       next(err);
-    } else if (req.body.pin !== data.pin) {
+    } else if (req.body.privacyType === 1 && req.body.pin !== data.pin) {
       const err = errorHandler(ERROR_MESSAGE.INCORRECT_PIN);
       next(err);
     } else {
