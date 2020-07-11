@@ -8,7 +8,7 @@ dotenv.config();
 mongoose.Promise = global.Promise;
 
 export function connectToDB (_req: Request, _res: Response, next: NextFunction) {
-  mongoose.connect(process.env.MONGO_DB_URI as string, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  mongoose.connect(process.env.MONGO_DB_URI as string, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
     .then(_ => next())
     .catch((error: any) => {
       if (error) {

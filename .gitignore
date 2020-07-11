@@ -8,4 +8,6 @@
 
 # List of files
 .env
+.html
+.txt
 
