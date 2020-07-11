@@ -47,7 +47,7 @@ export class Poll {
   @prop({ required: [true, INFO_MESSAGE.PRIVACY_TYPE_REQUIRED.message], enum: PRIVACYTYPE })
   public privacyType!: PRIVACYTYPE;
 
-  @prop({ trim: true, type: mongoose.Schema.Types.String, unique: true, minlength: 10 })
+  @prop({ trim: true, type: mongoose.Schema.Types.String, minlength: 10 })
   public pin?: string
 
   @prop({ required: [true, INFO_MESSAGE.RESULT_DISPLAY_TYPE.message], enum: DISPLAYTYPE })
