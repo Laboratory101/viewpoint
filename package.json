@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "lint": "eslint \"**/*.ts\" --quiet --fix",
+    "lint": "eslint \"**/*.ts\" --quiet",
     "build": "npm run clean && tsc -p .",
     "prestart": "npm run build",
     "start": "node dist/server.js",

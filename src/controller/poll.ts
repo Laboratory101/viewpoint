@@ -6,7 +6,7 @@ import { generatePin } from '../utility/util-tools';
 export const pollController = express.Router();
 const poll: PollCollection = new PollCollection();
 
-pollController.post('/savePoll', (req: Request, res: Response, next: NextFunction) => {
+pollController.post('/save-poll', (req: Request, res: Response, next: NextFunction) => {
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
   }
@@ -17,7 +17,16 @@ pollController.post('/savePoll', (req: Request, res: Response, next: NextFunctio
   });
 });
 
-pollController.get('/fetchPoll/:id', (req: Request, res: Response, next: NextFunction) => {
+pollController.get('/load-poll/:host', (req: Request, res: Response, next: NextFunction) => {
+  poll.fetchPollByRef({ host: req.params.host }).then(pollList => {
+    res.status(200).send(pollList);
+  }).catch(err => {
+    err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;
+    next(err);
+  });
+});
+
+pollController.get('/fetch-poll/:id', (req: Request, res: Response, next: NextFunction) => {
   poll.fetchPollByRef({ _id: req.params.id }).then(pollList => {
     res.status(200).send(pollList);
   }).catch(err => {

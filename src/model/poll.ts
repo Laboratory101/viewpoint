@@ -56,6 +56,9 @@ export class Poll {
   @prop({ required: [true, INFO_MESSAGE.AUTHOR_REQUIRED.message], trim: true, type: mongoose.Schema.Types.String })
   public author!: string;
 
+  @prop({ unique: true, trim: true, type: mongoose.Schema.Types.String })
+  public host!: string;
+
   @prop({
     required: [true, INFO_MESSAGE.CANDIDATES_REQUIRED.message],
     type: Candidate,
