@@ -41,7 +41,7 @@ export class Poll {
   @prop({ type: mongoose.Schema.Types.Number, default: 4, min: [4, INFO_MESSAGE.MIN_PARTICIPANT_COUNT.message] })
   public participantCount?: number;
 
-  @prop({ type: mongoose.Schema.Types.Number, default: 7 })
+  @prop({ type: mongoose.Schema.Types.Number, default: 7, max: [30, INFO_MESSAGE.MAX_DURATION.message] })
   public duration?: number;
 
   @prop({ required: [true, INFO_MESSAGE.PRIVACY_TYPE_REQUIRED.message], enum: PRIVACYTYPE })
@@ -53,10 +53,10 @@ export class Poll {
   @prop({ required: [true, INFO_MESSAGE.RESULT_DISPLAY_TYPE.message], enum: DISPLAYTYPE })
   public resultDisplayType!: DISPLAYTYPE;
 
-  @prop({ required: [true, INFO_MESSAGE.AUTHOR_REQUIRED.message], trim: true, type: mongoose.Schema.Types.String })
-  public author!: string;
+  @prop({ trim: true, type: mongoose.Schema.Types.String, default: 'Anonymous' })
+  public author?: string;
 
-  @prop({ unique: true, trim: true, type: mongoose.Schema.Types.String })
+  @prop({ required: [true, INFO_MESSAGE.HOST_REQUIRED.message], trim: true, type: mongoose.Schema.Types.String })
   public host!: string;
 
   @prop({

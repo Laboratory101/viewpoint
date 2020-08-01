@@ -31,19 +31,33 @@ participantController.post('/poll', (req: Request, res: Response, next: NextFunc
   });
 });
 
-participantController.post('/vote', (req: Request, res: Response, next: NextFunction) => {
+participantController.post('/vote', async (req: Request, res: Response, next: NextFunction) => {
   let errorObj: any;
   if (req.body.pollId && req.body.candidateId) {
-    poll.voteCandidate(req.body.pollId, req.body.candidateId).then((updatedData: any) => {
-      if (updatedData && updatedData.resultDisplayType === 1) {
-        io.joinRoom();
-        io.broadcastMessage(updatedData._id, updatedData.candidates);
+    const search = { _id: req.body.pollId };
+    const filterBy = { _id: 0, participantCount: 0, author: 0, updatedAt: 0 };
+    try {
+      const selectedPoll: Array<any> = await poll.fetchPollByRef(search, filterBy);
+      const today: number = new Date().getTime();
+      if (today > addDays(selectedPoll[0].createdAt, selectedPoll[0].duration)) {
+        const err = errorHandler(ERROR_MESSAGE.UNAVAILABLE_RESOURCE);
+        next(err);
+      } else {
+        poll.voteCandidate(req.body.pollId, req.body.candidateId).then((updatedData: any) => {
+          if (updatedData && updatedData.resultDisplayType === 1) {
+            io.joinRoom();
+            io.broadcastMessage(updatedData._id, updatedData.candidates);
+          }
+          res.status(SUCCESS_MESSAGE.VOTING_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.VOTING_SUCCESS.message });
+        }).catch(err => {
+          errorObj = errorHandler(ERROR_MESSAGE.ERROR_VOTING, err.stack);
+          next(errorObj);
+        });
       }
-      res.status(SUCCESS_MESSAGE.VOTING_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.VOTING_SUCCESS.message });
-    }).catch(err => {
-      errorObj = errorHandler(ERROR_MESSAGE.ERROR_VOTING, err.stack);
-      next(errorObj);
-    });
+    } catch (err) {
+      err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;
+      next(err);
+    }
   } else {
     errorObj = errorHandler(ERROR_MESSAGE.MISSING_DATA);
     next(errorObj);

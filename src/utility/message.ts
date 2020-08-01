@@ -24,5 +24,6 @@ export const INFO_MESSAGE: Response = {
   CANDIDATES_REQUIRED: { message: 'Please add candidates for the poll' },
   MIN_CANDIDATES: { message: 'There needs to be minimum of 2 candidates to set up a poll' },
   MIN_VOTE: { message: 'Votes cannot go negative' },
-  AUTHOR_REQUIRED: { message: 'Please enter the author of the poll' }
+  HOST_REQUIRED: { message: 'Hostname not specified' },
+  MAX_DURATION: { message: 'A Poll cannot be hosted more than 30 days' }
 };
