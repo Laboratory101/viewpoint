@@ -28,10 +28,16 @@ class Candidate {
 
   @prop({ type: mongoose.Schema.Types.Number, default: 0, min: [0, INFO_MESSAGE.MIN_VOTE.message] })
   public count?: number
+
+  @prop({ required: true, unique: true })
+  public candidateId!: string
 }
 
 @modelOptions({ schemaOptions: { collection: 'Poll', timestamps: true } })
 export class Poll {
+  @prop({ required: true, unique: true })
+  public pollId!: string
+
   @prop({ required: [true, INFO_MESSAGE.TITLE_REQUIRED.message], trim: true, type: mongoose.Schema.Types.String })
   public title!: string;
 
@@ -61,6 +67,7 @@ export class Poll {
 
   @prop({
     required: [true, INFO_MESSAGE.CANDIDATES_REQUIRED.message],
+    _id: false,
     type: Candidate,
     validate: {
       validator: candaidates => (Array.isArray(candaidates) && candaidates.length > 1),
