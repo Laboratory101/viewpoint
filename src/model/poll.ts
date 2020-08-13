@@ -38,7 +38,7 @@ export class Poll {
   @prop({ trim: true, type: mongoose.Schema.Types.String })
   public description?: string;
 
-  @prop({ type: mongoose.Schema.Types.Number, default: 4, min: [4, INFO_MESSAGE.MIN_PARTICIPANT_COUNT.message] })
+  @prop({ type: mongoose.Schema.Types.Number, default: 3, min: [3, INFO_MESSAGE.MIN_PARTICIPANT_COUNT.message] })
   public participantCount?: number;
 
   @prop({ type: mongoose.Schema.Types.Number, default: 7, max: [30, INFO_MESSAGE.MAX_DURATION.message] })

@@ -18,7 +18,7 @@ export const SUCCESS_MESSAGE: Response = {
 
 export const INFO_MESSAGE: Response = {
   TITLE_REQUIRED: { message: 'Please provide a title for the poll' },
-  MIN_PARTICIPANT_COUNT: { message: 'There has to be minimum of 4 participants to take part in poll' },
+  MIN_PARTICIPANT_COUNT: { message: 'There has to be minimum of 3 participants to take part in poll' },
   PRIVACY_TYPE_REQUIRED: { message: 'Please set a privacy type for the poll' },
   RESULT_DISPLAY_TYPE: { message: 'Please set the display type for the results' },
   CANDIDATES_REQUIRED: { message: 'Please add candidates for the poll' },
