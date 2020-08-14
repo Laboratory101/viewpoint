@@ -11,15 +11,15 @@ const poll: PollCollection = new PollCollection();
 const io = new SocketConnection();
 
 participantController.post('/poll', (req: Request, res: Response, next: NextFunction) => {
-  const search = { _id: req.body.id };
-  const filterBy = { _id: 0, participantCount: 0, author: 0, updatedAt: 0 };
+  const search = { pollId: req.body.pollId };
+  const filterBy = { _id: 0, participantCount: 0, author: 0, updatedAt: 0, __v: 0 };
   poll.fetchPollByRef(search, filterBy).then((response: any) => {
     const data = response[0];
     const today = new Date().getTime();
     if (today > addDays(data.createdAt, data.duration)) {
       const err = errorHandler(ERROR_MESSAGE.UNAVAILABLE_RESOURCE);
       next(err);
-    } else if (req.body.privacyType === 1 && req.body.pin !== data.pin) {
+    } else if (data.privacyType === 1 && req.body.pin !== data.pin) {
       const err = errorHandler(ERROR_MESSAGE.INCORRECT_PIN);
       next(err);
     } else {
