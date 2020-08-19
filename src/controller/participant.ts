@@ -11,8 +11,8 @@ const poll: PollCollection = new PollCollection();
 const io = new SocketConnection();
 
 participantController.post('/poll', (req: Request, res: Response, next: NextFunction) => {
-  const search = { pollId: req.body.pollId };
-  const filterBy = { _id: 0, participantCount: 0, author: 0, updatedAt: 0, __v: 0 };
+  const search = { _id: req.body.pollId };
+  const filterBy = { participantCount: 0, author: 0, updatedAt: 0, __v: 0 };
   poll.fetchPollByRef(search, filterBy).then((response: any) => {
     const data = response[0];
     const today = new Date().getTime();

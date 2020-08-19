@@ -27,8 +27,9 @@ pollController.get('/load-poll/:host', (req: Request, res: Response, next: NextF
 });
 
 pollController.get('/fetch-poll/:id', (req: Request, res: Response, next: NextFunction) => {
-  poll.fetchPollByRef({ _id: req.params.id }).then(pollList => {
-    res.status(200).send(pollList);
+  const projection = { __v: 0, updatedAt: 0 };
+  poll.fetchPollByRef({ _id: req.params.id }, projection).then(pollList => {
+    res.status(200).send(pollList[0]);
   }).catch(err => {
     err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;
     next(err);
