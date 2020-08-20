@@ -5,7 +5,9 @@ export function generatePin () {
     length: 10,
     numbers: true,
     symbols: true,
-    strict: true
+    strict: true,
+    excludeSimilarCharacters: true,
+    exclude: '",:;`~\''
   });
 }
 

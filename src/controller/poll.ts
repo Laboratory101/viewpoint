@@ -9,6 +9,8 @@ const poll: PollCollection = new PollCollection();
 pollController.post('/save-poll', (req: Request, res: Response, next: NextFunction) => {
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
+  } else {
+    req.body.pin = '';
   }
   poll.savePoll(req.body).then(_response => {
     res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });
@@ -39,6 +41,8 @@ pollController.get('/fetch-poll/:id', (req: Request, res: Response, next: NextFu
 pollController.put('/update-poll/:id', (req: Request, res: Response, next: NextFunction) => {
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
+  } else {
+    req.body.pin = '';
   }
   poll.updatePoll(req.params.id, req.body).then(response => {
     if (response.nModified) {

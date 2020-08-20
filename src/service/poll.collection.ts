@@ -26,7 +26,7 @@ export class PollCollection {
   }
 
   public async updatePoll (pollId: string, pollData: Poll): Promise<any> {
-    return PollModel.update({ _id: pollId }, pollData);
+    return PollModel.updateOne({ _id: pollId }, { $set: pollData });
   }
 
   public async deletePoll (pollId: string): Promise<any> {
