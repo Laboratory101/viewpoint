@@ -8,12 +8,16 @@ export const ERROR_MESSAGE: Response = {
   UNAVAILABLE_RESOURCE: { status: 410, message: 'Requested resource is no longer available' },
   INCORRECT_PIN: { status: 401, message: 'Incorrect pin' },
   ERROR_VOTING: { status: 500, message: 'Unable to vote due to server error' },
-  MISSING_DATA: { status: 409, message: 'Request could not be processed as some inputs were missing' }
+  MISSING_DATA: { status: 409, message: 'Request could not be processed as some inputs were missing' },
+  UPDATE_POLL_FAILED: { status: 404, message: 'Updation failed' },
+  DELETE_POLL_FAILED: { status: 404, message: 'Deletion failed' }
 };
 
 export const SUCCESS_MESSAGE: Response = {
   SAVE_POLL_SUCCESS: { status: 201, message: 'Insertion successfull' },
-  VOTING_SUCCESS: { status: 200, message: 'Vote captured successfully' }
+  VOTING_SUCCESS: { status: 200, message: 'Vote captured successfully' },
+  UPDATE_POLL_SUCCESS: { status: 200, message: 'Updated successfully' },
+  DELETE_POLL_SUCCESS: { status: 200, message: 'Deleted successfully' }
 };
 
 export const INFO_MESSAGE: Response = {

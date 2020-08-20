@@ -24,4 +24,12 @@ export class PollCollection {
     const projection = { title: 1, resultDisplayType: 1, description: 1, candidates: 1, _id: 0 };
     return PollModel.findById(pollId, projection);
   }
+
+  public async updatePoll (pollId: string, pollData: Poll): Promise<any> {
+    return PollModel.update({ _id: pollId }, pollData);
+  }
+
+  public async deletePoll (pollId: string): Promise<any> {
+    return PollModel.deleteOne({ _id: pollId });
+  }
 }

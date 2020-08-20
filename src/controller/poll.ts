@@ -35,3 +35,30 @@ pollController.get('/fetch-poll/:id', (req: Request, res: Response, next: NextFu
     next(err);
   });
 });
+
+pollController.put('/update-poll/:id', (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.privacyType === 1) {
+    req.body.pin = generatePin();
+  }
+  poll.updatePoll(req.params.id, req.body).then(response => {
+    if (response.nModified) {
+      res.status(SUCCESS_MESSAGE.UPDATE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.UPDATE_POLL_SUCCESS.message });
+    } else {
+      res.status(ERROR_MESSAGE.UPDATE_POLL_FAILED.status as number).send({ message: ERROR_MESSAGE.UPDATE_POLL_FAILED.message });
+    }
+  }).catch(err => {
+    next(err);
+  });
+});
+
+pollController.delete('/delete-poll/:id', (req: Request, res: Response, next: NextFunction) => {
+  poll.deletePoll(req.params.id).then(response => {
+    if (response.deletedCount) {
+      res.status(SUCCESS_MESSAGE.DELETE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.DELETE_POLL_SUCCESS.message });
+    } else {
+      res.status(ERROR_MESSAGE.DELETE_POLL_FAILED.status as number).send({ message: ERROR_MESSAGE.DELETE_POLL_FAILED.message });
+    }
+  }).catch(err => {
+    next(err);
+  });
+});
