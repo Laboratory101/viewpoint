@@ -10,7 +10,7 @@ pollController.post('/save-poll', (req: Request, res: Response, next: NextFuncti
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
   } else {
-    req.body.pin = '';
+    req.body.pin = null;
   }
   poll.savePoll(req.body).then(_response => {
     res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });
@@ -42,7 +42,7 @@ pollController.put('/update-poll/:id', (req: Request, res: Response, next: NextF
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
   } else {
-    req.body.pin = '';
+    req.body.pin = null;
   }
   poll.updatePoll(req.params.id, req.body).then(response => {
     if (response.nModified) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { requestLogger, errorLogger } from './utility/logger';
@@ -5,18 +6,25 @@ import { pollController } from './controller/poll';
 import { participantController } from './controller/participant';
 import { connectToDB } from './utility/db-connect';
 
-// initialize configuration
+export class ViewPortServer {
+  private _app: express.Application;
 
-export const app: express.Application = express();
+  constructor () {
+    this._app = express();
+    this._app.use(cors());
+    this._app.use(express.json());
+    this._app.use(connectToDB);
+    this._app.use('/favicon.ico', (_req: Request, _res: Response) => { });
+    this._app.use(requestLogger);
+    this._app.use('/poll', pollController);
+    this._app.use('/participate', participantController);
+    this._app.all('*', (_req: Request, res: Response) => {
+      res.send('Invalid route');
+    });
+    this._app.use(errorLogger);
+  }
 
-app.use(cors());
-app.use(express.json());
-app.use(connectToDB);
-app.use('/favicon.ico', (_req: Request, _res: Response) => { });
-app.use(requestLogger);
-app.use('/poll', pollController);
-app.use('/participate', participantController);
-app.all('*', (_req: Request, res: Response) => {
-  res.send('Invalid route');
-});
-app.use(errorLogger);
+  get app (): express.Application {
+    return this._app;
+  }
+}

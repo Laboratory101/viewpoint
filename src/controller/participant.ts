@@ -4,11 +4,10 @@ import { PollCollection } from '../service/poll.collection';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../utility/message';
 import { addDays } from '../utility/util-tools';
 import { errorHandler } from '../utility/errorHandler';
-import { SocketConnection } from '../utility/socket';
+import { websocket } from '../server';
 
 export const participantController = express.Router();
 const poll: PollCollection = new PollCollection();
-const io = new SocketConnection();
 
 participantController.post('/poll', (req: Request, res: Response, next: NextFunction) => {
   const search = { _id: req.body.pollId };
@@ -45,8 +44,7 @@ participantController.post('/vote', async (req: Request, res: Response, next: Ne
       } else {
         poll.voteCandidate(req.body.pollId, req.body.candidateId).then((updatedData: any) => {
           if (updatedData && updatedData.resultDisplayType === 1) {
-            io.joinRoom();
-            io.broadcastMessage(updatedData._id, updatedData.candidates);
+            websocket.in(updatedData._id).emit('send-message', updatedData.candidates);
           }
           res.status(SUCCESS_MESSAGE.VOTING_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.VOTING_SUCCESS.message });
         }).catch(err => {

@@ -17,7 +17,9 @@ class Candidate {
     trim: true,
     type: mongoose.Schema.Types.String,
     validate: {
-      validator: value => validator.isURL(value, { protocols: ['http', 'https'] }),
+      validator: value => {
+        return value ? validator.isURL(value, { protocols: ['http', 'https'] }) : true;
+      },
       message: ERROR_MESSAGE.IMAGE_UPLOAD_ERROR.message
     }
   })
