@@ -6,12 +6,13 @@ import { generatePin } from '../utility/util-tools';
 export const pollController = express.Router();
 const poll: PollCollection = new PollCollection();
 
-pollController.post('/save-poll', (req: Request, res: Response, next: NextFunction) => {
+pollController.post('/save-poll', (req: any, res: Response, next: NextFunction) => {
   if (req.body.privacyType === 1) {
     req.body.pin = generatePin();
   } else {
     req.body.pin = null;
   }
+  req.body.host = req.user.email;
   poll.savePoll(req.body).then(_response => {
     res.status(SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.status as number).send({ message: SUCCESS_MESSAGE.SAVE_POLL_SUCCESS.message });
   }).catch((err: any) => {

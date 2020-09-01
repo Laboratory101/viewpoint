@@ -2,6 +2,12 @@
 import fs from 'fs';
 import { Response, Request, NextFunction } from 'express';
 import path from 'path';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { errorHandler } from './errorHandler';
+import { ERROR_MESSAGE } from './message';
+
+dotenv.config();
 
 export function requestLogger (req: Request, _res: Response, next: NextFunction) {
   const logMessage: string = '' + new Date() + '-' + req.method + ' ' + req.url + '\n';
@@ -29,4 +35,24 @@ export function errorLogger (err: any, _req: Request, res: Response, next: NextF
     res.json({ message: err.message });
   }
   next();
+}
+
+export function authenticateToken (req: any, _res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+  let errorObj: any;
+  if (token === null) {
+    errorObj = errorHandler(ERROR_MESSAGE.TOKEN_MSSING);
+    next(errorObj);
+  } else {
+    jwt.verify(token as string, process.env.ACCESS_TOKEN_SECRET as string, (err, user) => {
+      if (err) {
+        errorObj = errorHandler(ERROR_MESSAGE.INVALID_TOKEN, err.stack);
+        next(errorObj);
+      }
+      console.log('User: ', user);
+      req.user = { ...user };
+      next();
+    });
+  }
 }

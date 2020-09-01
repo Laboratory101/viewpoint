@@ -10,7 +10,9 @@ export const ERROR_MESSAGE: Response = {
   ERROR_VOTING: { status: 500, message: 'Unable to vote due to server error' },
   MISSING_DATA: { status: 409, message: 'Request could not be processed as some inputs were missing' },
   UPDATE_POLL_FAILED: { status: 404, message: 'Updation failed' },
-  DELETE_POLL_FAILED: { status: 404, message: 'Deletion failed' }
+  DELETE_POLL_FAILED: { status: 404, message: 'Deletion failed' },
+  INVALID_TOKEN: { status: 403, message: 'Invalid Token or token has expired' },
+  TOKEN_MSSING: { status: 401, message: 'Unauthorized request' }
 };
 
 export const SUCCESS_MESSAGE: Response = {

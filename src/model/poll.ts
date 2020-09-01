@@ -61,9 +61,6 @@ export class Poll {
   @prop({ required: [true, INFO_MESSAGE.RESULT_DISPLAY_TYPE.message], enum: DISPLAYTYPE })
   public resultDisplayType!: DISPLAYTYPE;
 
-  @prop({ trim: true, type: mongoose.Schema.Types.String, default: 'Anonymous' })
-  public author?: string;
-
   @prop({ required: [true, INFO_MESSAGE.HOST_REQUIRED.message], trim: true, type: mongoose.Schema.Types.String })
   public host!: string;
 
