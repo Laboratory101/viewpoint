@@ -1,25 +1,28 @@
-import express from 'express';
+/* eslint-disable no-console */
 import dotenv from 'dotenv';
-import cors from 'cors';
+import io from 'socket.io';
+import { createServer } from 'http';
+import { ViewPortServer } from './app';
 
-import { loginController } from './controller/login';
-import { UserCollection } from './service/user.collection';
-
-// initialize configuration
 dotenv.config();
-
-const app: express.Application = express();
 const port = process.env.SERVER_PORT;
+const app = new ViewPortServer().app;
+const server = createServer(app);
+export const websocket: any = io(server);
 
-app.use(cors());
-app.use(express.json());
-app.use('/', loginController);
-app.use('/test', (_req: any, res: any) => {
-  const users: UserCollection = new UserCollection();
-  users.getAllUsers().then(data => res.status(200).send(data));
+websocket.on('connect', (socket: any) => {
+  console.log('Connected client on port %s', port);
+
+  socket.on('join-room', (room: string) => {
+    socket.join(room);
+    console.log('Joined room!');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
+server.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
