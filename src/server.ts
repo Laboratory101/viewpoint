@@ -4,17 +4,19 @@ import io from 'socket.io';
 import { createServer } from 'http';
 import { ViewPortServer } from './app';
 import redis from 'redis';
-import { URL } from 'url';
+// import { URL } from 'url';
 
 dotenv.config();
 const port = process.env.SERVER_PORT;
 const app = new ViewPortServer().app;
 const server = createServer(app);
-const redisURL: URL = new URL(process.env.REDISCLOUD_URL as string);
+// const redisURL: URL = new URL(process.env.REDISCLOUD_URL as string);
 export const websocket: any = io(server);
-export const redisClient = redis.createClient(parseInt(redisURL.port, 10), redisURL.hostname, { no_ready_check: true });
+// export const redisClient = redis.createClient(parseInt(redisURL.port, 10), redisURL.hostname, { no_ready_check: true });
 
-redisClient.auth(redisURL.password);
+// redisClient.auth(redisURL.password);
+
+export const redisClient = redis.createClient();
 
 websocket.on('connect', (socket: any) => {
   console.log('Connected client on port %s', port);
