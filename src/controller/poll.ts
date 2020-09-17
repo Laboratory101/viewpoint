@@ -21,7 +21,7 @@ pollController.post('/save-poll', (req: any, res: Response, next: NextFunction) 
 });
 
 pollController.get('/load-poll/:host', (req: Request, res: Response, next: NextFunction) => {
-  poll.fetchPollByRef({ host: req.params.host }, { __v: 0, createdAt: 0, updatedAt: 0 }).then(pollList => {
+  poll.fetchPollByRef({ host: req.params.host }, { __v: 0, updatedAt: 0 }).then(pollList => {
     res.status(200).send(pollList);
   }).catch(err => {
     err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;

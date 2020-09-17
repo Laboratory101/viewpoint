@@ -24,8 +24,8 @@ participantController.post('/poll', (req: Request, res: Response, next: NextFunc
     } else {
       res.status(200).send(data);
     }
-  }).catch(err => {
-    err.message = ERROR_MESSAGE.FETCH_POLL_FAILED.message;
+  }).catch(_ => {
+    const err = errorHandler(ERROR_MESSAGE.UNAVAILABLE_RESOURCE);
     next(err);
   });
 });
